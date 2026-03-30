@@ -1,15 +1,31 @@
+import os
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "✅ Я онлайн!"
+
+def run():
+    port = int(os.environ.get("PORT", 8080))  # Получаем порт из переменной окружения
+    app.run(host='0.0.0.0', port=port)  # Запускаем Flask на этом порту
+
+Thread(target=run).start()
 import asyncio
-import logging
-import random
-from aiogram import Bot, Dispatcher, F
-from aiogram.types import (
-    Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton,
-    FSInputFile
-)
+
+import aiosqlite
+
+from aiogram import Bot, Dispatcher, types, F
+
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, FSInputFile, InlineKeyboardMarkup, InlineKeyboardButton
+
 from aiogram.filters import CommandStart
-from aiogram.fsm.context import FSMContext
+
 from aiogram.fsm.state import State, StatesGroup
-from aiogram.fsm.storage.memory import MemoryStorage
+
+from aiogram.fsm.context import FSMContext
 
 # ===================== НАСТРОЙКИ =====================
 BOT_TOKEN = "8678287845:AAGtdxy4gxxBWCe9y4aPTRGs8sjHFmNNtto"
