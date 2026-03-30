@@ -1,18 +1,19 @@
-import os
 from flask import Flask
 from threading import Thread
+import os
 
-app = Flask('')
+app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "✅ Я онлайн!"
 
 def run():
-    port = int(os.environ.get("PORT", 8080))  # Получаем порт из переменной окружения
-    app.run(host='0.0.0.0', port=port)  # Запускаем Flask на этом порту
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port, use_reloader=False)  # Отключаем reloader для работы в Gunicorn
 
-Thread(target=run).start()
+if __name__ == "__main__":
+    Thread(target=run).start()
 import asyncio
 
 import aiosqlite
